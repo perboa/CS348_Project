@@ -6,13 +6,13 @@ USE webapp;
 
 CREATE TABLE University (
 	collegeID INT AUTO_INCREMENT, 
-	name VARCHAR(255) NOT NULL, 
+	uni_name VARCHAR(255) NOT NULL, 
 	city VARCHAR(50) NOT NULL, 
 	province VARCHAR(50) NOT NULL, 
 	country VARCHAR(50) NOT NULL, 
 	logoURL TEXT, 
-	rating FLOAT UNSIGNED,
-	CHECK (rating<=10),
+	rating FLOAT,
+	CHECK (rating>=0 AND rating<=10),
 	PRIMARY KEY (collegeID)
 );
 
@@ -21,9 +21,8 @@ CREATE TABLE Program (
 	collegeID INT NOT NULL, 
 	uni_name VARCHAR(255) NOT NULL, 
 	prog_name VARCHAR(255) NOT NULL,
-	PRIMARY KEY (programID) 
---    FOREIGN KEY (collegeID) REFERENCES University(collegeID), 
---    FOREIGN KEY (uni_name) REFERENCES University(name)
+	PRIMARY KEY (programID),
+	FOREIGN KEY (collegeID) REFERENCES University(collegeID)
 );
 
 CREATE TABLE Profile (
@@ -31,16 +30,18 @@ CREATE TABLE Profile (
 	name VARCHAR(50) NOT NULL, 
 	email VARCHAR(50) NOT NULL, 
 	LinkedIn VARCHAR(255), 
-	joinedDate DATETIME DEFAULT CURRENT_TIMESTAMP, 
-	attended VARCHAR(255) NOT NULL, 
+	joinedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+	collegeID INT NOT NULL,
+	uni_name VARCHAR(255) NOT NULL, 
 	yearStarted INT UNSIGNED NOT NULL, 
-	yearEnded INT UNSIGNED, 
-	program VARCHAR(255), 
+	yearEnded INT UNSIGNED,
+	programID INT,
+	program VARCHAR(255),
 	degreeType VARCHAR(25) NOT NULL,
 --	CHECK (yearStarted <= YEAR(NOW())),
-	PRIMARY KEY (userID)
---    FOREIGN KEY (attended) REFERENCES University(name), 
---    FOREIGN KEY (program) REFERENCES Program(prog_name)
+	PRIMARY KEY (userID),
+	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
+	FOREIGN KEY (programID) REFERENCES Program(programID)
 );
 
 CREATE TABLE Review (
@@ -53,9 +54,8 @@ CREATE TABLE Review (
 	price INT UNSIGNED NOT NULL,  -- change to ROI, or remove if needed
 	academics TINYINT UNSIGNED NOT NULL, 
 	studentLife TINYINT UNSIGNED NOT NULL, 
-	recommend enum('N','Y') NOT NULL,
+	recommend enum('N', 'Y') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
-	PRIMARY KEY (reviewID) 
---    FOREIGN KEY (writerID) REFERENCES Profile(userID) ON DELETE CASCADE, 
---    FOREIGN KEY (writtenBy) REFERENCES Profile(name)
+	PRIMARY KEY (reviewID),
+	FOREIGN KEY (writerID) REFERENCES Profile(userID) ON DELETE CASCADE
 );

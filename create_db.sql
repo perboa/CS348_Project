@@ -48,7 +48,9 @@ CREATE TABLE Review (
 	reviewID INT AUTO_INCREMENT, 
 	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
 	writerID INT NOT NULL, 
-	writtenBy VARCHAR(50) NOT NULL, 
+	writtenBy VARCHAR(50) NOT NULL,
+	collegeID INT NOT NULL,
+	programID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
 	price INT UNSIGNED NOT NULL,  -- change to ROI, or remove if needed
@@ -57,5 +59,7 @@ CREATE TABLE Review (
 	recommend enum('N', 'Y') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
 	PRIMARY KEY (reviewID),
-	FOREIGN KEY (writerID) REFERENCES Profile(userID) ON DELETE CASCADE
+	FOREIGN KEY (writerID) REFERENCES Profile(userID) ON DELETE CASCADE,
+	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
+	FOREIGN KEY (programID) REFERENCES Program(programID)
 );

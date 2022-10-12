@@ -1,4 +1,5 @@
 -- DROP DATABASE IF EXISTS webapp;
+-- Uncomment above line to replace existing webapp database
 
 CREATE DATABASE webapp;
 

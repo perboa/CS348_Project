@@ -19,7 +19,6 @@ CREATE TABLE University (
 CREATE TABLE Program (
 	programID INT AUTO_INCREMENT, 
 	collegeID INT NOT NULL, 
-	uni_name VARCHAR(255) NOT NULL, 
 	prog_name VARCHAR(255) NOT NULL,
 	PRIMARY KEY (programID),
 	FOREIGN KEY (collegeID) REFERENCES University(collegeID)

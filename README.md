@@ -3,8 +3,8 @@
 This project was created with a flask backend, react frontend, and mysql database.
 
 ## What you need to install
-Docker (desktop recommended)
-mysql workbench
+- Docker (desktop recommended)
+- mysql workbench
 
 ## Order of operations
 1. Boot up the container(s) by running 'docker-compose up --build'

@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  api:
+    build: api
+    volumes:
+      - ./api:/api
+    restart: always
+    environment:
+      FLASK_DEBUG: True
+      DATABASE_URL: mysql://root:secret@db:3306/ureview
+    image: ureview-app-api
+    depends_on:
+      - "db"
+  client:
+    build: .
+    image: ureview-app-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - "api"
+  db:
+    image: mysql:8
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: ureview
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+  db:
+    driver: local
+    

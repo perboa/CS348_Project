@@ -15,3 +15,4 @@ This project was created with a flask backend, react frontend, and mysql databas
 6. if you are solely testing mysql stuff, you just have to run the db service (docker-compose up db), then you can connect on port 3306 with user=root, password=secret.
 In mysql workbench you can run any sql queries you want.
 7. all the sql query stuff Jason worked on is in /sql
+8. I haven't tested it yet, but if you want your work to show faster in the changes, you can run just the db service, then from the main directory you can run 'yarn start-api' and then 'yarn start'

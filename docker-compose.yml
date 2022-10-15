@@ -24,8 +24,9 @@ services:
     restart: always
     ports:
       - "3306:3306"
-    environment:
-      MYSQL_USER: root
+    environment: 
+      MYSQL_USER: mysql
+      MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: ureview
     volumes:

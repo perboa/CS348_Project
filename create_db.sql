@@ -34,39 +34,39 @@ CREATE TABLE User (
 	password VARCHAR(50) NOT NULL,
 	linkedIn VARCHAR(255), 
 	joinedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-	collegeID INT NOT NULL,
-	uni_name VARCHAR(255) NOT NULL, 
+--	collegeID INT NOT NULL,
+--	uni_name VARCHAR(255) NOT NULL, 
 	yearStarted INT UNSIGNED NOT NULL, 
 	yearEnded INT UNSIGNED,
-	programID INT,
-	program VARCHAR(255),
-	degreeType VARCHAR(25) NOT NULL,
+	programID INT NOT NULL,
+--	prog_name VARCHAR(255),
+--	degreeType VARCHAR(25) NOT NULL,
 	CHECK (yearStarted >= 1940),
 	CHECK (yearEnded IS NULL OR yearStarted <= yearEnded), 
 	PRIMARY KEY (userID),
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
+--	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
 	FOREIGN KEY (programID) REFERENCES Program(programID)
 ); -- remove redundancy
 
 CREATE TABLE Attended (
 	attID INT AUTO_INCREMENT,
 	userID INT NOT NULL,
-	collegeID INT NOT NULL,
+--	collegeID INT NOT NULL,
 	programID INT,
 	yearStarted INT UNSIGNED,
 	yearEnded INT UNSIGNED,
 	PRIMARY KEY (attID),
 	FOREIGN KEY (userID) REFERENCES User(UserID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
+--	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
 	FOREIGN KEY (programID) REFERENCES User(programID)
 ); -- remove redundancy
 
 CREATE TABLE Review (
 	reviewID INT AUTO_INCREMENT, 
 	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
-	writerID INT NOT NULL, 
+	userID INT NOT NULL, 
 	writtenBy VARCHAR(50) NOT NULL,
-	collegeID INT NOT NULL,
+--	collegeID INT NOT NULL,
 	programID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
@@ -76,7 +76,7 @@ CREATE TABLE Review (
 	recommend enum('N', 'Y') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
 	PRIMARY KEY (reviewID),
-	FOREIGN KEY (writerID) REFERENCES User(userID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
+	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+--	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
 	FOREIGN KEY (programID) REFERENCES Program(programID)
-);
+); -- remove redundancy

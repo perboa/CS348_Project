@@ -59,7 +59,7 @@ CREATE TABLE Review (
 	employer_reputation INT UNSIGNED NOT NULL,
 	academics TINYINT UNSIGNED NOT NULL, 
 	studentLife TINYINT UNSIGNED NOT NULL, 
-	recommend enum('N', 'Y') NOT NULL,
+	recommend enum('Y', 'N') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
 	PRIMARY KEY (userID, collegeID)
 );

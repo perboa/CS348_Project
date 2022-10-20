@@ -52,8 +52,7 @@ CREATE TABLE Attended (
 
 CREATE TABLE Review (
 	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
-	userID INT NOT NULL, 
-	writtenBy VARCHAR(50) NOT NULL,
+	userID INT NOT NULL,
 	collegeID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 

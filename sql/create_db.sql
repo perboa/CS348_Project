@@ -57,7 +57,7 @@ CREATE TABLE Review (
 	collegeID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
-	price INT UNSIGNED NOT NULL,
+	employer_reputation INT UNSIGNED NOT NULL,
 	academics TINYINT UNSIGNED NOT NULL, 
 	studentLife TINYINT UNSIGNED NOT NULL, 
 	recommend enum('N', 'Y') NOT NULL,

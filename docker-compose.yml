@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  init_db:
+    build: init_db
+    restart: always
+    environment:
+      FLASK_DEBUG: True
+      DATABASE_URL: mysql://root:secret@db:3306/ureview
+    image: ureview-app-init_db
+    profiles:
+      - populate
+    depends_on:
+      - "db"
+      - "api"
   api:
     build: api
     volumes:

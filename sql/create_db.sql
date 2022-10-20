@@ -11,7 +11,7 @@ CREATE TABLE College (
 	province VARCHAR(50) NOT NULL, 
 	country VARCHAR(50) NOT NULL, 
 	logoURL TEXT, 
-	rating FLOAT,
+	rating FLOAT DEFAULT 0.0,
 	CHECK (rating>=0 AND rating<=10),
 	PRIMARY KEY (collegeID)
 );

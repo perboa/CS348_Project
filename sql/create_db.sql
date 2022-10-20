@@ -1,10 +1,10 @@
-DROP DATABASE IF EXISTS webapp;
+DROP DATABASE IF EXISTS ureview;
 
-CREATE DATABASE webapp;
+CREATE DATABASE ureview;
 
-USE webapp;
+USE ureview;
 
-CREATE TABLE University (
+CREATE TABLE College (
 	collegeID INT AUTO_INCREMENT, 
 	uni_name VARCHAR(255) NOT NULL, 
 	city VARCHAR(50) NOT NULL, 
@@ -20,36 +20,46 @@ CREATE TABLE Program (
 	programID INT AUTO_INCREMENT, 
 	collegeID INT NOT NULL, 
 	prog_name VARCHAR(255) NOT NULL,
+	degree_type enum('bachelors'. 'masters'. 'doctors'. 'associates'. 'professional'), 
 	PRIMARY KEY (programID),
 	FOREIGN KEY (collegeID) REFERENCES University(collegeID)
 );
 
-CREATE TABLE Profile (
+CREATE TABLE User (
 	userID INT AUTO_INCREMENT, 
-	name VARCHAR(50) NOT NULL, 
-	email VARCHAR(50) NOT NULL, 
-	LinkedIn VARCHAR(255), 
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	avatar TEXT,
+	email VARCHAR(50) NOT NULL,
+	password VARCHAR(50) NOT NULL,
+	linkedIn VARCHAR(255), 
 	joinedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
-	collegeID INT NOT NULL,
-	uni_name VARCHAR(255) NOT NULL, 
 	yearStarted INT UNSIGNED NOT NULL, 
 	yearEnded INT UNSIGNED,
-	programID INT,
-	program VARCHAR(255),
-	degreeType VARCHAR(25) NOT NULL,
---	CHECK (yearStarted <= YEAR(NOW())),
+	CHECK (yearStarted >= 1940),
+	CHECK (yearEnded IS NULL OR yearStarted <= yearEnded), 
 	PRIMARY KEY (userID),
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
-	FOREIGN KEY (programID) REFERENCES Program(programID)
 );
 
-CREATE TABLE Review (
-	reviewID INT AUTO_INCREMENT, 
-	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
-	writerID INT NOT NULL, 
-	writtenBy VARCHAR(50) NOT NULL,
-	collegeID INT NOT NULL,
+CREATE TABLE Attended (
+	userID INT NOT NULL,
+    collegeID INT NOT NULL,
 	programID INT NOT NULL,
+	yearStarted INT UNSIGNED,
+	yearEnded INT UNSIGNED,
+	PRIMARY KEY (userID),
+    PRIMARY KEY (collegeID),
+    PRIMARY KEY (programID),
+	FOREIGN KEY (userID) REFERENCES User(UserID) ON DELETE CASCADE,
+	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
+	FOREIGN KEY (programID) REFERENCES User(programID)
+); -- remove redundancy
+
+CREATE TABLE Review (
+	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	userID INT NOT NULL, 
+	writtenBy VARCHAR(50) NOT NULL,
+    collegeID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
 	price INT UNSIGNED NOT NULL,  -- change to ROI, or remove if needed
@@ -57,8 +67,8 @@ CREATE TABLE Review (
 	studentLife TINYINT UNSIGNED NOT NULL, 
 	recommend enum('N', 'Y') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
-	PRIMARY KEY (reviewID),
-	FOREIGN KEY (writerID) REFERENCES Profile(userID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID),
-	FOREIGN KEY (programID) REFERENCES Program(programID)
-);
+	PRIMARY KEY (userID),
+    PRIMARY KEY (collegeID),
+	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+	FOREIGN KEY (collegeID) REFERENCES College(collegeID),
+); -- remove redundancy

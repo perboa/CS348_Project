@@ -22,7 +22,7 @@ CREATE TABLE Program (
 	prog_name VARCHAR(255) NOT NULL,
 	degree_type enum('bachelors'. 'masters'. 'doctors'. 'associates'. 'professional'), 
 	PRIMARY KEY (programID),
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID)
+	FOREIGN KEY (collegeID) REFERENCES College(collegeID)
 );
 
 CREATE TABLE User (
@@ -38,37 +38,29 @@ CREATE TABLE User (
 	yearEnded INT UNSIGNED,
 	CHECK (yearStarted >= 1940),
 	CHECK (yearEnded IS NULL OR yearStarted <= yearEnded), 
-	PRIMARY KEY (userID),
+	PRIMARY KEY (userID)
 );
 
 CREATE TABLE Attended (
 	userID INT NOT NULL,
-    collegeID INT NOT NULL,
+	collegeID INT NOT NULL,
 	programID INT NOT NULL,
 	yearStarted INT UNSIGNED,
 	yearEnded INT UNSIGNED,
-	PRIMARY KEY (userID),
-    PRIMARY KEY (collegeID),
-    PRIMARY KEY (programID),
-	FOREIGN KEY (userID) REFERENCES User(UserID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
-	FOREIGN KEY (programID) REFERENCES User(programID)
-); -- remove redundancy
+	PRIMARY KEY (userID, collegeID, programID)
+);
 
 CREATE TABLE Review (
 	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
 	userID INT NOT NULL, 
 	writtenBy VARCHAR(50) NOT NULL,
-    collegeID INT NOT NULL,
+	collegeID INT NOT NULL,
 	reviewBody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
-	price INT UNSIGNED NOT NULL,  -- change to ROI, or remove if needed
+	price INT UNSIGNED NOT NULL,
 	academics TINYINT UNSIGNED NOT NULL, 
 	studentLife TINYINT UNSIGNED NOT NULL, 
 	recommend enum('N', 'Y') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
-	PRIMARY KEY (userID),
-    PRIMARY KEY (collegeID),
-	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES College(collegeID),
-); -- remove redundancy
+	PRIMARY KEY (userID, collegeID)
+);

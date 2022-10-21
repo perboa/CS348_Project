@@ -11,7 +11,7 @@ CREATE TABLE College (
 	province VARCHAR(50) NOT NULL, 
 	country VARCHAR(50) NOT NULL, 
 	logoURL TEXT, 
-	rating FLOAT,
+	rating FLOAT DEFAULT 0.0,
 	CHECK (rating>=0 AND rating<=10),
 	PRIMARY KEY (collegeID)
 );
@@ -22,7 +22,7 @@ CREATE TABLE Program (
 	prog_name VARCHAR(255) NOT NULL,
 	degree_type enum('bachelors'. 'masters'. 'doctors'. 'associates'. 'professional'), 
 	PRIMARY KEY (programID),
-	FOREIGN KEY (collegeID) REFERENCES University(collegeID)
+	FOREIGN KEY (collegeID) REFERENCES College(collegeID)
 );
 
 CREATE TABLE User (
@@ -30,7 +30,7 @@ CREATE TABLE User (
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
 	avatar TEXT,
-	email VARCHAR(50) NOT NULL,
+	email VARCHAR(50) UNIQUE NOT NULL,
 	password VARCHAR(50) NOT NULL,
 	linkedIn VARCHAR(255), 
 	joinedDate DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -38,37 +38,33 @@ CREATE TABLE User (
 	yearEnded INT UNSIGNED,
 	CHECK (yearStarted >= 1940),
 	CHECK (yearEnded IS NULL OR yearStarted <= yearEnded), 
-	PRIMARY KEY (userID),
+	PRIMARY KEY (userID)
 );
 
 CREATE TABLE Attended (
 	userID INT NOT NULL,
-    collegeID INT NOT NULL,
+	collegeID INT NOT NULL,
 	programID INT NOT NULL,
 	yearStarted INT UNSIGNED,
 	yearEnded INT UNSIGNED,
-	PRIMARY KEY (userID),
-    PRIMARY KEY (collegeID),
-    PRIMARY KEY (programID),
-	FOREIGN KEY (userID) REFERENCES User(UserID) ON DELETE CASCADE,
+	PRIMARY KEY (userID, collegeID, programID),
+	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
 	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
 	FOREIGN KEY (programID) REFERENCES User(programID)
-); -- remove redundancy
+);
 
 CREATE TABLE Review (
 	timeWritten DATETIME DEFAULT CURRENT_TIMESTAMP, 
-	userID INT NOT NULL, 
-	writtenBy VARCHAR(50) NOT NULL,
-    collegeID INT NOT NULL,
-	reviewBody TEXT, 
+	userID INT NOT NULL,
+	collegeID INT NOT NULL,
+	reviewbody TEXT, 
 	difficulty TINYINT UNSIGNED NOT NULL, 
-	price INT UNSIGNED NOT NULL,  -- change to ROI, or remove if needed
+	employer_reputation INT UNSIGNED NOT NULL,
 	academics TINYINT UNSIGNED NOT NULL, 
 	studentLife TINYINT UNSIGNED NOT NULL, 
-	recommend enum('N', 'Y') NOT NULL,
+	recommend enum('Y', 'N') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
-	PRIMARY KEY (userID),
-    PRIMARY KEY (collegeID),
+	PRIMARY KEY (userID, collegeID),
 	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
-	FOREIGN KEY (collegeID) REFERENCES College(collegeID),
-); -- remove redundancy
+	FOREIGN KEY (collegeID) REFERENCES College(collegeID)
+);

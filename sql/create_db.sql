@@ -47,7 +47,10 @@ CREATE TABLE Attended (
 	programID INT NOT NULL,
 	yearStarted INT UNSIGNED,
 	yearEnded INT UNSIGNED,
-	PRIMARY KEY (userID, collegeID, programID)
+	PRIMARY KEY (userID, collegeID, programID),
+	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+	FOREIGN KEY (collegeID) REFERENCES User(collegeID),
+	FOREIGN KEY (programID) REFERENCES User(programID)
 );
 
 CREATE TABLE Review (
@@ -61,5 +64,7 @@ CREATE TABLE Review (
 	studentLife TINYINT UNSIGNED NOT NULL, 
 	recommend enum('Y', 'N') NOT NULL,
 	CONSTRAINT CHK_Review CHECK (difficulty<=10 AND academics<=10 AND studentLife<=10),
-	PRIMARY KEY (userID, collegeID)
+	PRIMARY KEY (userID, collegeID),
+	FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
+	FOREIGN KEY (collegeID) REFERENCES College(collegeID)
 );

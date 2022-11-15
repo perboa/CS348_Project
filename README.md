@@ -7,7 +7,7 @@ This project was created with a flask backend, react frontend, and mysql databas
 - mysql workbench
 
 ## Running the app for the first time
-From the main directry, run 'docker-compose --profile populate up --build'
+From the main directry, run `docker-compose --profile populate up --build`
   - this will populate the database with some random data (should always be the same since I set the seed to 2, but correct me if I'm wrong)
   - you can then connect to the database through mysql workbench on port 3306 with user=root, password=secret to test your sql queries against sample data
   - this command should only be run once and not everytime you're rebuilding the containers
@@ -27,7 +27,7 @@ From the main directry, run 'docker-compose --profile populate up --build'
 10. when done, commit changes and push
 
 ## Notes
- - You can also run the service using the container(s) by running 'docker-compose up --build'
+ - You can also run the service using the container(s) by running `docker-compose up --build`
   - everytime you make a change to either the frontend or backend using the docker compose method, you'll have to rebuild the containers
  - routes are in the views.py file in /api, and models/tables are defined in /api/models.py
  - if you are solely testing mysql stuff, you just have to run the db service (docker-compose up db), then you can connect on port 3306 with user=root, password=secret. In mysql workbench you can run any sql queries you want.

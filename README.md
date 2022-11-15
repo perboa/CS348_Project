@@ -15,14 +15,14 @@ From the main directry, run 'docker-compose --profile populate up --build'
   - If you want to reset the database back to it's original data, you can run this command as well
 
 ## Workflow
-1. switch to main branch git checkout main
-2. pull latest changes git pull
-3. create new branch git checkout -b yourname/branch-name
+1. switch to main branch `git checkout main`
+2. pull latest changes `git pull`
+3. create new branch `git checkout -b yourname/branch-name`
 4. run yarn install to install new dependencies
-5. start the db service docker-compose up db
+5. start the db `service docker-compose up db`
 6. uncomment the database_url env variable in api/.flaskenv
-7. start api code yarn start-api
-8. start frontend client yarn start
+7. start api code `yarn start-api`
+8. start frontend client `yarn start`
 9. get to coding and see any changes instantly on localhost:3000
 10. when done, commit changes and push
 

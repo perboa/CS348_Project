@@ -18,7 +18,7 @@ From the main directry, run 'docker-compose --profile populate up --build'
 1. switch to main branch `git checkout main`
 2. pull latest changes `git pull`
 3. create new branch `git checkout -b yourname/branch-name`
-4. run yarn install to install new dependencies
+4. run `yarn install` to install new dependencies
 5. start the db `service docker-compose up db`
 6. uncomment the database_url env variable in api/.flaskenv
 7. start api code `yarn start-api`

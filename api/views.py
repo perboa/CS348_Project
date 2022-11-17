@@ -1,11 +1,8 @@
 from flask import jsonify, Blueprint, Flask
 from flask import request
-from flask_jwt_extended import create_access_token
-from flask_jwt_extended import get_jwt_identity
-from flask_jwt_extended import jwt_required
-#from models import User
-
-
+from flask_sqlalchemy import SQLAlchemy
+from models import User, College, Review, Attended, Program
+from api import db
 
 views = Blueprint("views", __name__, static_folder='../build', static_url_path='/')
 
@@ -17,18 +14,17 @@ def index():
 def test():
     return jsonify({"Hello":"World"})
 
-# WIP still need to figure out db 
-@views.route('/api/login', methods = ['POST'])
-def login():
-    #print(request)
-    #sentemail = request.json['email']
-    #sentpassword = request.json['password']
-    #user = db.User.query.filter_by(email=sentemail).first()
-    #actualpassword = user.password
-    #if user is None:
-    #    return jsonify({"msg": "Bad email"}), 401
-    #elif actualpassword != sentpassword:
-    #   return jsonify({"msg": "Bad password"}), 401
-    #access_token = create_access_token(identity=email)
-    #else:
-    #    return jsonify({"msg": "Success"})
+@views.route('/colleges/base-info/<id>', methods=['GET'])
+def getCollegeBase(id):
+    stmt = db.select(College).where(College.id == id)
+    result = db.session.execute(stmt).one()[0]
+
+    return jsonify({
+        'name': result.name,
+        'city': result.city,
+        'state': result.state_province,
+        'country': result.country,
+        'logo_URL': result.logo_URL
+    })
+
+    

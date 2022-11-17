@@ -72,7 +72,7 @@ for college in colleges:
         degree_type = DegreeType(random.randint(1, 5))
         name = programData['Major'][r_name]
         
-        program = Program(name=name, degree_type=degree_type, college=college)
+        program = Program(name=name, degree_type=degree_type, college=college, logo_URL=name+".png")
         programs.append(program)
 
 #Step 4: Add randomly 0-2 programs to each user

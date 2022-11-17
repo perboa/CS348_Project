@@ -15,13 +15,7 @@ const SiteHeader = () => (
         <Header height={{base: 70, md: 70 }} p="md">
           <Group sx={{ height: '100%' }} px={20} position="apart">
               <Text size="lg" weight="boldest">University Searcher</Text>
-              <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }} onclick={() => {
-                <Router>
-                  <Routes>
-                    <Route exact path='/'></Route>
-                  </Routes>
-                </Router>
-              }}>Home</Button>
+              <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Home</Button>
                 
               
           </Group>

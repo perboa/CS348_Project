@@ -8,7 +8,7 @@ import { Link, Router } from 'react-router-dom';
 const LoginForm = ({ setLoggedIn }) =>{
     const saveChanges = async () =>{
 
-     /*   try {
+        try {
             if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
             // WIP - still gotta fix backend stuff
             //const url = 'api/login'
@@ -23,7 +23,7 @@ const LoginForm = ({ setLoggedIn }) =>{
             //}
         } catch (error) {
             console.log(error)
-        } */
+        } 
         if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
     }
 

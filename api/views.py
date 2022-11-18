@@ -3,6 +3,7 @@ from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from models import User, College, Review, Attended, Program
 from api import db
+from signup import SignupForm
 
 views = Blueprint("views", __name__, static_folder='../build', static_url_path='/')
 
@@ -37,3 +38,15 @@ def login(data):
         'password': result.password
     }
 )
+
+ @views.route('/api/signup', methods = ['GET', 'POST'])
+ def signup(): 
+    form = SignupForm()
+    if form.validate_on_submit():
+        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect('/')
+    return render_template('signup.html', form=form)
+

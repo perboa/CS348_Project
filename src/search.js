@@ -1,5 +1,17 @@
 import {React, useState} from 'react';
-import {Paper, Container, Button, Box, Group, Avatar, Text, MantineColor, SelectItemProps, Autocomplete} from '@mantine/core';
+import {
+    Paper, 
+    Container, 
+    Button, 
+    Box, 
+    Group, 
+    Avatar, 
+    Text, 
+    MantineColor, 
+    SelectItemProps,
+    Stack,
+    Autocomplete
+  } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
     BrowserRouter as Router,
@@ -33,6 +45,7 @@ const Search = ({ setLoggedIn }) => {
     history(mypath);
     setIsShown(true);
   };
+
   const posts = [
     { id: '2', name: 'University of Waterloo', city: "Waterloo", state: "ON", country: "CA"},
     { id: '3', name: 'Harvard University', city: "Cambridge", state: "MA", country: "US"},
@@ -67,11 +80,21 @@ const Search = ({ setLoggedIn }) => {
         <div> 
           <ul>
             {curData.map(item => {
-              return 
-              <Paper shadow="xs" p="md">
-                <li>{item.name}</li>
-                <li>{item.city}</li>
-              </Paper>
+              return (
+                <Group>
+                  <Paper shadow="xs" p="md">
+                    <Group>
+                    <Stack>
+                    <li>{item.name}</li>
+                    </Stack>
+                    <Stack>
+                    <li>{item.city}</li>
+
+                    </Stack>
+                    </Group>
+                  </Paper>
+                </Group>
+              )
           })}
           </ul>
         </div> 

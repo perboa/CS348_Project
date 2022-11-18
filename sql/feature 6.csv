@@ -1,0 +1,2 @@
+id,email,password,joined_date,first_name,last_name,linkedIn,avatar_URL
+151,testuser@gmail.com,123,"2022-11-18 03:12:45",Test,User,NULL,NULL

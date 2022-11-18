@@ -28,6 +28,17 @@ def getCollegeBase(id):
         'logo_URL': result.logo_URL
     })
 
+@views.route('/login', methods = ['GET'])
+def login(data):
+    stmt = db.select(User).where(User.email == data.email)
+    result = db.session.execute(stmt).one()[0]
+
+    return jsonify ({
+        'email': result.email,
+        'password': result.password
+    }
+)
+
  @views.route('/api/signup', methods = ['GET', 'POST'])
  def signup(): 
     form = SignupForm()
@@ -38,3 +49,4 @@ def getCollegeBase(id):
         db.session.commit()
         return redirect('/')
     return render_template('signup.html', form=form)
+

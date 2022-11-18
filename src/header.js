@@ -15,7 +15,9 @@ const SiteHeader = () => (
         <Header height={{base: 70, md: 70 }} p="md">
           <Group sx={{ height: '100%' }} px={20} position="apart">
               <Text size="lg" weight="boldest">University Searcher</Text>
+              <Link to="/search">
               <Button variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>Home</Button>
+              </Link>
                 
               
           </Group>

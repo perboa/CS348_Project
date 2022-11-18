@@ -13,6 +13,7 @@ import SiteHeader from './header';
 import SearchForm from './Searchbar';
 import Search from './search';
 import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
+import SearchBar from './search';
 //import { Table } from '@mantine/core';
 
 document.body.style.backgroundColor = "#D7E5F0"
@@ -31,6 +32,7 @@ const App = () => {
                 <>
                     <Logout setLoggedIn={setLoggedIn}/>
                     <Search setLoggedIn={setLoggedIn}/>
+
                     
                 </>
 

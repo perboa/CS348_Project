@@ -1,9 +1,12 @@
 import React from 'react';
 import { Button } from '@mantine/core';
+import { Link } from 'react-router-dom';
 
 const Logout = ({setLoggedIn}) => (
     <div>
-        <Button onClick={()=>{setLoggedIn(false)}}>Logout</Button>
+        <Link to="/">
+            <Button onClick={()=>{setLoggedIn(false)}}>Logout</Button>
+        </Link>
     </div> 
 )
 

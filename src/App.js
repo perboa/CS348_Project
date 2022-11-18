@@ -10,6 +10,8 @@ import LoginForm from './login';
 import Form from './Form';
 import Logout from './Logout';
 import SiteHeader from './header';
+import SearchForm from './Searchbar';
+import Search from './search';
 import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
 import SearchBar from './search';
 //import { Table } from '@mantine/core';
@@ -29,7 +31,8 @@ const App = () => {
             <Route exact path='/search' element={
                 <>
                     <Logout setLoggedIn={setLoggedIn}/>
-                    <Form setLoggedIn={setLoggedIn}/>
+                    <Search setLoggedIn={setLoggedIn}/>
+
                     
                 </>
 

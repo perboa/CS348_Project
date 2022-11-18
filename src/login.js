@@ -43,7 +43,7 @@ const LoginForm = ({ setLoggedIn }) =>{
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
-          label="Email"
+          label="Email address"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
           onChange={(e)=>{

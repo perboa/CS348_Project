@@ -11,6 +11,7 @@ import Form from './Form';
 import Logout from './Logout';
 import SiteHeader from './header';
 import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
+import SearchBar from './search';
 //import { Table } from '@mantine/core';
 
 document.body.style.backgroundColor = "#D7E5F0"
@@ -28,7 +29,7 @@ const App = () => {
             <Route exact path='/search' element={
                 <>
                     <Logout setLoggedIn={setLoggedIn}/>
-                    <Form/>
+                    <Form setLoggedIn={setLoggedIn}/>
                     
                 </>
 

@@ -58,7 +58,7 @@ for i in range(0, numColleges):
     state = row['State']
     country = row ['Country']
 
-    college = College(name=name, country=country, state_province=state, city=city)
+    college = College(name=name, country=country, state_province=state, city=city, logo_URL=name+".png")
     colleges.append(college)
 
 #Step 3: Create all the programs
@@ -72,7 +72,7 @@ for college in colleges:
         degree_type = DegreeType(random.randint(1, 5))
         name = programData['Major'][r_name]
         
-        program = Program(name=name, degree_type=degree_type, college=college, logo_URL=name+".png")
+        program = Program(name=name, degree_type=degree_type, college=college)
         programs.append(program)
 
 #Step 4: Add randomly 0-2 programs to each user

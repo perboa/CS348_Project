@@ -39,8 +39,8 @@ def login(data):
     }
 )
 
- @views.route('/api/signup', methods = ['GET', 'POST'])
- def signup(): 
+@views.route('/api/signup', methods = ['GET', 'POST'])
+def signup(): 
     form = SignupForm()
     if form.validate_on_submit():
         user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)

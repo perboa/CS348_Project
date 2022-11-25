@@ -1,7 +1,7 @@
 FROM python:3.9
 WORKDIR /app
 
-COPY requirements.txt api.py views.py models.py .flaskenv ./
+COPY requirements.txt api.py views.py models.py signup.py signup.html .flaskenv ./
 RUN pip install -r ./requirements.txt
 
 EXPOSE 5000

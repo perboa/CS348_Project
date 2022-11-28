@@ -61,5 +61,10 @@ code {
 }
 
 .login{
-  margin-top: 30%;
+  margin-top: 10%;
+}
+
+.errorMessage{
+  color: red;
+  display: none;
 }

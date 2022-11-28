@@ -8,48 +8,67 @@ import {
   } from "react-router-dom";
 import LoginForm from './login';
 import Form from './Form';
-import Logout from './Logout';
 import SiteHeader from './header';
 import SearchForm from './Searchbar';
 import Search from './search';
+import SignUp from './signup';
 import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
 import SearchBar from './search';
+import { render } from '@testing-library/react';
 //import { Table } from '@mantine/core';
 
 document.body.style.backgroundColor = "#D7E5F0"
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false)
-    console.log(setLoggedIn)
-    useEffect(()=>{console.log(loggedIn)},[loggedIn])
     return (
          loggedIn ? 
          <>
-         <Router>
-            <SiteHeader/>
+          <Router>
+            <SiteHeader loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             <Routes>
-            <Route exact path='/search' element={
-                <>
-                    <Logout setLoggedIn={setLoggedIn}/>
-                    <Search setLoggedIn={setLoggedIn}/>
-
-                    
-                </>
-
-            }>
-            </Route>
-               
+            <Route 
+                exact path='*' 
+                element={
+                  <>
+                    <Search/>
+                  </>
+                }>
+              </Route>
+            <Route 
+                exact path='/search' 
+                element={
+                  <>
+                    <Search/>
+                  </>
+                }>
+              </Route>
             </Routes>
-        </Router>
+          </Router>
          </>
-         
-      : <Router>
-        <SiteHeader/>
-        <Routes>
-            <Route path="*" element={<LoginForm setLoggedIn={setLoggedIn}/>} />
-        </Routes>
-      
-      </Router>
+        : <Router>
+          <SiteHeader loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
+          <Routes>
+          <Route 
+                exact path='*' 
+                element={
+                  <>
+                    <Search/>
+                  </>
+                }>
+              </Route>
+            <Route 
+                exact path='/search' 
+                element={
+                  <>
+                    <Search setLoggedIn={setLoggedIn}/>
+                  </>
+                }>
+              </Route>
+            <Route exact path="/signUp" element={<SignUp />} />
+            <Route exact path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
+          </Routes>
+        </Router>
 
     );
 }

@@ -1,17 +1,24 @@
 import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import "./index.css"
+import history from "history/browser"
 import axios from "axios";
 import { Link, Router } from 'react-router-dom';
-//import axios check if server is corect
 
-const LoginForm = ({ setLoggedIn }) =>{
+const LoginForm = (props) =>{
+  console.log(props)
     const saveChanges = async () =>{
 
         try {
-            if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
+            if( form.values.email === 'mar@abc.com')  
+            { props.setLoggedIn(true);
+              history.push('/search')
+            } else {
+              document.getElementById('errorMessage').style.display='block';
+            }
+
             // WIP - still gotta fix backend stuff
-            //const url = 'api/login'
+            //const url = '/login'
             //const data = {
             //    email: form.values.email,
             //    password: form.values.password
@@ -24,7 +31,7 @@ const LoginForm = ({ setLoggedIn }) =>{
         } catch (error) {
             console.log(error)
         } 
-        if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
+        //if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
     }
 
     const form = useForm({
@@ -70,10 +77,11 @@ const LoginForm = ({ setLoggedIn }) =>{
         />
 
         <Group position="right" mt="md">
+        <div className='errorMessage' id='errorMessage'>Invalid email or password</div>
           <div>
-            <Link to="/search">
+            
               <Button type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
-            </Link>
+            
           </div>
         </Group>
       </form>

@@ -28,7 +28,7 @@ import SiteHeader from './header';
 import axios from "axios";
 import "./index.css"
 
-const Search = ({ setLoggedIn }) => {
+const Search = () => {
   const [value, setValue] = useState('');
   const form = useForm({
       initialValues: {

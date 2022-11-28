@@ -8,7 +8,7 @@ This project was created with a flask backend, react frontend, and mysql databas
 
 ## Running the app for the first time
 From the main directry, run `docker-compose --profile populate up --build`
-  - this will populate the database with some random data (should always be the same since I set the seed to 2, but correct me if I'm wrong)
+  - this will populate the database with data (should always be the same since I set the seed to 2), we will use this data as our production data as described in the report.
   - you can then connect to the database through mysql workbench on port 3306 with user=root, password=secret to test your sql queries against sample data
   - this command should only be run once and not everytime you're rebuilding the containers
   - for the normal workflow, see 'Workflow' below

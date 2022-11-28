@@ -2,6 +2,7 @@ import { TextInput, Checkbox, Button, Group, Box } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import "./index.css"
 import axios from "axios";
+import { Link, Router } from 'react-router-dom';
 //import axios check if server is corect
 
 const LoginForm = ({ setLoggedIn }) =>{
@@ -22,7 +23,8 @@ const LoginForm = ({ setLoggedIn }) =>{
             //}
         } catch (error) {
             console.log(error)
-        }
+        } 
+        if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
     }
 
     const form = useForm({
@@ -43,7 +45,7 @@ const LoginForm = ({ setLoggedIn }) =>{
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <TextInput
           withAsterisk
-          label="Email"
+          label="Email address"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
           onChange={(e)=>{
@@ -68,7 +70,11 @@ const LoginForm = ({ setLoggedIn }) =>{
         />
 
         <Group position="right" mt="md">
-          <Button type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
+          <div>
+            <Link to="/search">
+              <Button type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
+            </Link>
+          </div>
         </Group>
       </form>
     </Box>

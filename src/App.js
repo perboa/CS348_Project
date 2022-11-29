@@ -14,6 +14,7 @@ import Search from './search';
 import SignUp from './signup';
 import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
 import SearchBar from './search';
+import College from './college';
 import { render } from '@testing-library/react';
 //import { Table } from '@mantine/core';
 
@@ -34,7 +35,7 @@ const App = () => {
                     <Search/>
                   </>
                 }>
-              </Route>
+            </Route>
             <Route 
                 exact path='/search' 
                 element={
@@ -42,7 +43,15 @@ const App = () => {
                     <Search/>
                   </>
                 }>
-              </Route>
+            </Route>
+            <Route 
+              exact path='/college' 
+              element={
+                <>
+                  <College/>
+                </>
+              }>
+            </Route>
             </Routes>
           </Router>
          </>
@@ -56,15 +65,23 @@ const App = () => {
                     <Search/>
                   </>
                 }>
-              </Route>
-            <Route 
+          </Route>
+          <Route 
                 exact path='/search' 
                 element={
                   <>
                     <Search setLoggedIn={setLoggedIn}/>
                   </>
                 }>
-              </Route>
+          </Route>
+          <Route 
+                exact path='/college' 
+                element={
+                  <>
+                    <College/>
+                  </>
+                }>
+          </Route>
             <Route exact path="/signUp" element={<SignUp />} />
             <Route exact path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
           </Routes>

@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from models import User, College, Review, Attended, Program
 from api import db
 from signup import SignupForm
+from sqlalchemy import func
 
 views = Blueprint("views", __name__, static_folder='../build', static_url_path='/')
 
@@ -15,8 +16,9 @@ def index():
 def test():
     return jsonify({"Hello":"World"})
 
-@views.route('/colleges/base-info/<id>', methods=['GET'])
-def getCollegeBase(id):
+@views.route('/colleges/base-info', methods=['GET'])
+def getCollegeBase():
+    id = request.args['ID']
     stmt = db.select(College).where(College.id == id)
     result = db.session.execute(stmt).one()[0]
 
@@ -26,6 +28,21 @@ def getCollegeBase(id):
         'state': result.state_province,
         'country': result.country,
         'logo_URL': result.logo_URL
+    })
+
+@views.route('/colleges/summary', methods=['GET'])
+def getCollegeBase():
+    args = request.args
+    stmt = db.select().where(College.id == id)
+    # need to finish this
+    # db.session.query(func.avg(Review.).label('average')).filter(Rating.url==url_string.netloc)
+
+    return jsonify({
+        'rating': result.name,
+        'student_life': result.city,
+        'difficulty': result.state_province,
+        'academics': result.country,
+        'reputation': result.logo_URL
     })
 
 @views.route('/login', methods = ['GET'])

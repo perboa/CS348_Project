@@ -18,7 +18,7 @@ import College from './college';
 import { render } from '@testing-library/react';
 //import { Table } from '@mantine/core';
 
-document.body.style.backgroundColor = "#D7E5F0"
+document.body.style.backgroundColor = "#FFFFFF"
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false)

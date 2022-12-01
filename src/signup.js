@@ -1,7 +1,17 @@
-import { TextInput, PasswordInput, Checkbox, Button, Group, Box } from '@mantine/core';
+import { TextInput, PasswordInput, Checkbox, Button, Group, Box, Select } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import "./index.css";
 import axios from "axios";
+
+const { readFileSync } = require('fs');
+
+function readtxt(filename) {
+	const contents = readFileSync(filename, 'utf-8');
+	const arr = contents.split(\r?\n/);
+	return arr;
+}
+
+const univ = readtxt('./unilist.txt');
 
 const SignUp = () =>{
 
@@ -41,6 +51,28 @@ const SignUp = () =>{
           placeholder="Your last name"
           {...form.getInputProps('lastName')}
         />
+		
+		<Select
+			label="Your university"
+			placeholder="Select one"
+			searchable
+			nothingFound="No options"
+			maxDropdownHeight={280}
+			data={univ}
+		/>
+		
+		<Select
+			label="Your program"
+			placeholder="Select one"
+			searchable
+			nothingFound="No options"
+			data={["General Agriculture", "Fine Arts", "Biology", "Ecology", 
+					"Business Management and Administration", "Economics", 
+					"Computer and Information Systems", "Mathematics", 
+					"Mechanical Engineering", "Chemistry", 
+					"Health and Medical Preparatory Programs", 
+					"Interdisciplinary Studies"]}
+		/>
 		
 		<TextInput
           withAsterisk

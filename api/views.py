@@ -30,6 +30,7 @@ def getCollegeBase():
         'logo_URL': result.logo_URL
     })
 
+
 @views.route('/colleges/summary', methods=['GET'])
 def getCollegeBase():
     args = request.args
@@ -45,16 +46,26 @@ def getCollegeBase():
         'reputation': result.logo_URL
     })
 
-@views.route('/login', methods = ['GET'])
-def login(data):
-    stmt = db.select(User).where(User.email == data.email)
-    result = db.session.execute(stmt).one()[0]
-
-    return jsonify ({
-        'email': result.email,
-        'password': result.password
-    }
-)
+@views.route('/login', methods = ['GET', 'POST'])
+def login():
+    uemail = request.json.get("email", None)
+    password = request.json.get("password", None)
+    stmt = db.select(User).where(User.email == uemail)
+    result = db.session.execute(stmt).scalar()
+    print("here")
+    print(result)
+    if result == None:
+        return "False"
+    else: 
+        actpassword = result.password
+        if actpassword == password:
+            return "True"
+        else: return "False"
+    #return jsonify ({
+    #    'email': result.email,
+    #    'password': result.password
+    #}
+#)
 
 @views.route('/api/signup', methods = ['GET', 'POST'])
 def signup(): 

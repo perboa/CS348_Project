@@ -70,7 +70,7 @@ const App = () => {
                 }>
           </Route>
           <Route 
-                path='/college/:id'  
+                path='/college/:id' 
                 element={
                   <>
                     <College/>

@@ -1,5 +1,5 @@
 import React from "react";
-import UW from './logos/UW.png';
+import UW from './logos/University of Waterloo.png';
 import "./index.css";
 
 export default function UWLogo(props) {

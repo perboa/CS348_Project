@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import axios from 'axios';
 import { useParams } from "react-router";
+import Review from "./review";
+import { Modal, Group, Radio, Grid, Textarea } from '@mantine/core';
 
 function withParams(Component) {
   return props => <Component {...props} params={useParams()} />;
@@ -33,6 +35,14 @@ class College extends React.Component {
         this.getBaseInfo = this.getBaseInfo.bind(this);
         this.getSummaryInfo = this.getSummaryInfo.bind(this);
         this.getReviews = this.getReviews.bind(this);
+        this.onChangeRec = this.onChangeRec.bind(this);
+        this.onChangeRep = this.onChangeRep.bind(this);
+        this.onChangeDiff = this.onChangeDiff.bind(this);
+        this.onChangeSL = this.onChangeSL.bind(this);
+        this.onChangeEP = this.onChangeEP.bind(this);
+        this.onChangeRev = this.onChangeRev.bind(this);
+        this.formSubmit = this.formSubmit.bind(this);
+        this.postReview = this.postReview.bind(this);
       }
 
       componentDidMount() {
@@ -41,6 +51,46 @@ class College extends React.Component {
         this.getSummaryInfo(id);
         this.getReviews(id);
       };
+
+      onChangeRec(event) {
+        this.setState({
+          rating: event.target.value
+        });
+      }
+
+      onChangeDiff(event) {
+        this.setState({
+          difficulty: event.target.value
+        });
+      }
+
+      onChangeSL(event) {
+        this.setState({
+          studentLife: event.target.value
+        });
+      }
+
+      onChangeRep(event) {
+        this.setState({
+          academics: event.target.value
+        });
+      }
+
+      onChangeEP(event) {
+        this.setState({
+          employerRating: event.target.value
+        });
+      }
+
+      onChangeRev(event) {
+        this.setState({
+          review: event.target.value
+        });
+      }
+
+      formSubmit(event) {
+        event.preventDefault();
+      }
 
       getBaseInfo = (id) => {
         axios.get('http://127.0.0.1:5000/colleges/base-info', {
@@ -87,7 +137,7 @@ class College extends React.Component {
       };
 
       getReviews = (id) => {
-        axios.get('http://127.0.0.1:5000/colleges/reviews/all', {
+        axios.get('http://127.0.0.1:5000/colleges/reviews/all_ids', {
               params: {
                 ID: id
               }
@@ -95,11 +145,7 @@ class College extends React.Component {
               .then((res) => {
                 let data = res.data;
                 this.setState({
-                  rating: data.rating,
-                  studentLife: data.student_life,
-                  academics: data.academics,
-                  difficulty: data.difficulty,
-                  reputation: data.reputation
+                  reviews: data.reviews,
                 });
               })
               .catch((err) => {
@@ -107,6 +153,19 @@ class College extends React.Component {
                 console.log(err);
               })
       };
+
+      postReview = () => {
+        axios.post('http://127.0.0.1:5000/review', {
+          // collegeId
+          // userID
+          rating: this.state.rating,
+          reputation: this.state.reputation,
+          studentLife: this.state.studentLife,
+          review: this.state.review,
+          employerRating: this.state.employerRating,
+          difficulty: this.state.difficulty
+      })
+      }
 
 
       render() {
@@ -169,13 +228,98 @@ class College extends React.Component {
                 </div>
                 <div id="reviews" className="basis-3/5 flex flex-col items-center">
                     <div id="header" className='w-full h-20 flex flex-row-reverse pr-52 pt-1 '>
-                      <Button className='hover:bg-blue-800 bg-blue-600 h-[4rem] w-40 text-xl'> Write Review </Button>
+                      <Modal
+                      title="Write a Review"
+                      size="100%"
+                      opened={this.state.opened}
+                      onClose={() => this.setState({ opened: false })}>
+                      <Grid grow gutter="xs">
+                        <Grid.Col span={1}>
+                          <Radio.Group
+                            name="Recommendation"
+                            label="Recommend?"
+                            description="Would you recommend this university?"
+                            size='xs'
+                            withAsterisk
+                            id='recommendation'>
+                            <Radio value="1" label="Yes" checked={this.state.rating} onChange={this.onChangeRec}/>
+                            <Radio value="0" label="No" checked={this.state.rating} onChange={this.onChangeRec}/>
+                          </Radio.Group>
+                        </Grid.Col>
+                        <Grid.Col span={1}>
+                          <Radio.Group
+                            name="difficulty"
+                            label="Difficulty"
+                            description="How hard is the coursework?"
+                            size='xs'
+                            id='difficulty'
+                          >
+                            <Radio value="awful" label="Awful" checked={this.state.difficulty="awful"} onChange={this.onChangeDiff}/>
+                            <Radio value="bad" label="Bad" checked={this.state.difficulty="bad"} onChange={this.onChangeDiff}/>
+                            <Radio value="neutral" label="Ok" checked={this.state.difficulty="neutral"} onChange={this.onChangeDiff}/>
+                            <Radio value="good" label="Good" checked={this.state.difficulty="good"} onChange={this.onChangeDiff}/>
+                            <Radio value="great" label="Great" checked={this.state.difficulty="great"} onChange={this.onChangeDiff}/>
+                          </Radio.Group>
+                        </Grid.Col>
+                        <Grid.Col span={1}>
+                          <Radio.Group
+                            name="employer_reputation"
+                            label="Employer Reputation"
+                            description="How is the job market after graduating?"
+                            size='xs'
+                            id='employer_reputation'
+                          >
+                            <Radio value="awful" label="Awful" checked={this.state.employerRating="awful"} onChange={this.onChangeEP}/>
+                            <Radio value="bad" label="Bad" checked={this.state.employerRating="bad"} onChange={this.onChangeEP}/>
+                            <Radio value="neutral" label="Ok" checked={this.state.employerRating="neutral"} onChange={this.onChangeEP}/>
+                            <Radio value="good" label="Good" checked={this.state.employerRating="good"} onChange={this.onChangeEP}/>
+                            <Radio value="great" label="Great" checked={this.state.employerRating="great"} onChange={this.onChangeEP}/>
+                          </Radio.Group>
+                        </Grid.Col>
+                        <Grid.Col span={1}>
+                          <Radio.Group
+                            name="academics"
+                            label="Academics"
+                            description="What is the level of education?"
+                            size='xs'
+                            id='academics'
+                          >
+                            <Radio value="awful" label="Awful" checked={this.state.academics="awful"} onChange={this.onChangeRep}/>
+                            <Radio value="bad" label="Bad" checked={this.state.academics="bad"} onChange={this.onChangeRep}/>
+                            <Radio value="neutral" label="Ok" checked={this.state.academics="neutral"} onChange={this.onChangeRep}/>
+                            <Radio value="good" label="Good" checked={this.state.academics="good"} onChange={this.onChangeRep}/>
+                            <Radio value="great" label="Great" checked={this.state.academics="great"} onChange={this.onChangeRep}/>
+                          </Radio.Group>
+                        </Grid.Col>
+                        <Grid.Col span={1}>
+                          <Radio.Group
+                            name="student_life"
+                            label="Student Life"
+                            description="How would you rate the student life?"
+                            size='xs'
+                            id='student_life'
+                          >
+                            <Radio value="awful" label="Awful" checked={this.state.studentLife == "awful"} onChange={this.onChangeSL}/>
+                            <Radio value="bad" label="Bad" checked={this.state.studentLife == "bad"} onChange={this.onChangeSL}/>
+                            <Radio value="neutral" label="Ok" checked={this.state.studentLife == "neutral"} onChange={this.onChangeSL}/>
+                            <Radio value="good" label="Good" checked={this.state.studentLife == "good"} onChange={this.onChangeSL}/>
+                            <Radio value="great" label="Great" checked={this.state.studentLife == "great"} onChange={this.onChangeSL}/>
+                          </Radio.Group>
+                        </Grid.Col>
+                      </Grid>
+                      <Grid justify="center" align="center">
+                        <Grid.Col style={{ minHeight: 120 }}>
+                          <Textarea id="review" placeholder='Write a Review' radius="xs" minRows={4} onChange={this.onChangeRev}></Textarea>
+                        </Grid.Col>
+                      </Grid>
+                      <Button onClick = {() => this.formSubmit}> Submit</Button>
+                      </Modal>
+                      <Button onClick = {() => this.setState({ opened: true })} className='hover:bg-blue-800 bg-blue-600 h-[4rem] w-40 text-xl'> Write Review </Button>
                     </div>
-                    <div id="list" className="w-[65rem] flex flex-col align-center">
-                      <Card className="w-full flex flex-col" shadow="sm" p="lg" radius="md" withBorder>
-                        <h2 className='text-center text-gray-900 font-bold text-2xl'> Employer Reputation </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
-                      </Card>
+                    <div id="list" className="w-[65rem] flex flex-col align-center space-y-3">
+                     {this.state.reviews.map((review) => (
+                        <Review college_id={this.props.params.id} user_id={review}/>
+                     ))}
                     </div>
                 </div>
             </div>

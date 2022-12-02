@@ -121,5 +121,3 @@ def signup():
     if result == None:
         return "False"
     else: return "True"
-
-'''

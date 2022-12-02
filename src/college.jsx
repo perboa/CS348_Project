@@ -105,7 +105,7 @@ class College extends React.Component {
                   city: data.city,
                   state: data.state,
                   country: data.country,
-                  logo: data.logo_URL
+                  logo: data.logo_url
                 });
               })
               .catch((err) => {
@@ -312,7 +312,7 @@ class College extends React.Component {
                           <Textarea id="review" placeholder='Write a Review' radius="xs" minRows={4} onChange={this.onChangeRev}></Textarea>
                         </Grid.Col>
                       </Grid>
-                      <Button onClick = {() => this.formSubmit}> Submit</Button>
+                      <Button className="hover:bg-blue-800 bg-blue-600 h-[4rem] w-40 text-xl" onClick = {() => this.setState({ opened: false })}> Submit</Button>
                       </Modal>
                       <Button onClick = {() => this.setState({ opened: true })} className='hover:bg-blue-800 bg-blue-600 h-[4rem] w-40 text-xl'> Write Review </Button>
                     </div>

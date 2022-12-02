@@ -54,7 +54,6 @@ def getCollegeSummary():
 def getAllCollegeReviews():
     args = request.args
     id = args['ID']
-    print(id)
     results = Review.query.filter(Review.college_id == id).all()
 
     reviews = []

@@ -1,9 +1,9 @@
 from flask import jsonify, Blueprint, Flask
-from flask import request
+from flask import request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from models import User, College, Review, Attended, Program
 from api import db
-from signup import SignupForm
+# from signup import SignupForm
 
 views = Blueprint("views", __name__, static_folder='../build', static_url_path='/')
 
@@ -49,14 +49,19 @@ def login():
     #}
 #)
 
-@views.route('/api/signup', methods = ['GET', 'POST'])
+@views.route('/signup', methods = ['GET', 'POST'])
 def signup(): 
-    form = SignupForm()
-    if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
-        user.set_password(form.password.data)
+    fname = request.json.get("firstName", None)
+    lname = request.json.get("lastName", None)
+    given_email = request.json.get("email", None)
+    given_password = request.json.get("password", None)
+    user = User(first_name=fname, last_name=lname, email=given_email)
+    user.set_password(given_password)
+    search = db.select(User).where(User.email == given_email)
+    result = db.session.execute(search).scalar()
+    if result == None:
         db.session.add(user)
         db.session.commit()
-        return redirect('/')
-    return render_template('signup.html', form=form)
-
+        return "True"
+    else:
+        return "False"

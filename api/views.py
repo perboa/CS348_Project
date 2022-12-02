@@ -30,6 +30,7 @@ def getCollegeBase():
         'logo_URL': result.logo_URL
     })
 
+
 @views.route('/colleges/summary', methods=['GET'])
 def getCollegeSummary():
     args = request.args
@@ -48,6 +49,7 @@ def getCollegeSummary():
         'reputation': reputation
     })
 
+<<<<<<< HEAD
 @views.route('/colleges/reviews/all_ids', methods=['GET'])
 def getAllCollegeReviews():
     args = request.args
@@ -83,6 +85,8 @@ def getReview():
         'username' : user.first_name
     })
 
+=======
+>>>>>>> ebd7776cad10c1d9bfa84edbe9048315f413ee9e
 @views.route('/login', methods = ['GET', 'POST'])
 def login():
     uemail = request.json.get("email", None)
@@ -91,6 +95,7 @@ def login():
     result = db.session.execute(stmt).scalar()
     print("here")
     print(result)
+<<<<<<< HEAD
     responselist =[]
     if result == None:
         responselist.append("False")
@@ -105,6 +110,20 @@ def login():
             return responselist
         else: responselist.append("False")
         return responselist
+=======
+    if result == None:
+        return "False"
+    else: 
+        actpassword = result.password
+        if actpassword == password:
+            return "True"
+        else: return "False"
+    #return jsonify ({
+    #    'email': result.email,
+    #    'password': result.password
+    #}
+#)
+>>>>>>> ebd7776cad10c1d9bfa84edbe9048315f413ee9e
 
 @views.route('/signup', methods = ['GET', 'POST'])
 def signup(): 

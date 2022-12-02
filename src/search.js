@@ -52,7 +52,7 @@ const Search = () => {
   };
 
   const[posts, setPosts] = useState([
-    { id: '1', name: 'University of British Columbia', city: "Vancouver", state: "BC", country: "CA"}
+    
   ]);
 
     const handleFunctionAdd = (obj) => {
@@ -89,7 +89,7 @@ const Search = () => {
             //handleFunctionAdd()
             //console.log(posts);
           };
-          //getApiData('1').catch(console.error)
+          getApiData('1').catch(console.error)
           getApiData('2').catch(console.error)
           getApiData('3').catch(console.error)
           getApiData('4').catch(console.error)
@@ -109,7 +109,12 @@ const Search = () => {
     history(path);
     window.location.reload();
   }
-
+   function importAll(r) {
+    let images = {};
+    r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+    return images;
+  }
+  const images = importAll(require.context('./logos', false, /\.(png|jpe?g|svg)$/));
   const renderCond = curData => (
     isShown ? 
         <div> 
@@ -120,7 +125,7 @@ const Search = () => {
                   <Card shadow="lg" p="lg" radius="lg" withBorder>
                     <Card.Section>
                       <Image
-                        src="logos/Columbia University.png"
+                        src={images[`${item.logo_url}`]}
 
                         height={160}
                       />

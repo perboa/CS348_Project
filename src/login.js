@@ -10,28 +10,28 @@ const LoginForm = (props) =>{
     const saveChanges = async () =>{
 
         try {
-            if( form.values.email === 'mar@abc.com')  
-            { props.setLoggedIn(true);
-              history.push('/search')
-            } else {
-              document.getElementById('errorMessage').style.display='block';
+            const url = 'http://127.0.0.1:5000/login'
+            const data = {
+                email: form.values.email,
+                password: form.values.password
+            };
+            console.log("about to make request")
+            const value = await axios.post(url,data)
+            console.log(value)
+            if(value.data[0] == "True"){ 
+              props.setLoggedIn(true)
+              console.log(value.data[0])
+              console.log(value.data[1])
+              props.setid(value.data[1])
+              
+              history.push('/search')}
+            else if ((value.data == "False") || (form.values.termsOfService == false)){
+              props.setLoggedIn(false)
+                document.getElementById('errorMessage').style.display='block';
             }
-
-            // WIP - still gotta fix backend stuff
-            //const url = '/login'
-            //const data = {
-            //    email: form.values.email,
-            //    password: form.values.password
-            //};
-            //const value = await axios.post(url,data)
-            //if(value){ setLoggedIn(true)}
-            //else{
-            //    setLoggedIn(false)
-            //}
         } catch (error) {
             console.log(error)
         } 
-        //if( form.values.email === 'mar@abc.com') setLoggedIn(true) ;
     }
 
     const form = useForm({
@@ -77,10 +77,11 @@ const LoginForm = (props) =>{
         />
 
         <Group position="right" mt="md">
-        <div className='errorMessage' id='errorMessage'>Invalid email or password</div>
+        <div className='errorMessage' id='errorMessage'>Invalid email or password, please also make sure you have accepted terms and conditions</div>
+        <div className='errorMessage' id='errorMessagetwo'>You have to accept the terms and conditions to continue</div>
           <div>
             
-              <Button type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
+              <Button className="hover:bg-blue-800 bg-blue-600" type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
             
           </div>
         </Group>
@@ -89,4 +90,3 @@ const LoginForm = (props) =>{
     </div>
 )};
 export default LoginForm;
-

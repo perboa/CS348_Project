@@ -121,7 +121,7 @@ const Search = () => {
                       }}
                     />
 
-                    <Button type="submit" onClick={()=>{ 
+                    <Button type="submit" className="hover:bg-blue-800 bg-blue-600" onClick={()=>{ 
                                         console.log("Search term: ")
                                         console.log(form.values.searchTerm)
                                         saveChanges(form.values.searchTerm);

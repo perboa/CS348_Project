@@ -54,13 +54,13 @@ def getCollegeSummary():
 def getAllCollegeReviews():
     args = request.args
     id = args['ID']
-    stmt = db.select(Review.user_id).where(College.id == id)
-    results = db.session.execute(stmt).all()
+    print(id)
+    results = Review.query.filter(Review.college_id == id).all()
 
     reviews = []
 
     for review in results:
-        reviews.append(review[0])
+        reviews.append(review.user_id)
 
     return jsonify({
         'reviews': reviews
@@ -121,3 +121,18 @@ def signup():
     if result == None:
         return "False"
     else: return "True"
+
+@views.route('/api/review/insert', methods = ['POST'])
+def writeReview():
+    user_id =  request.json.get("user_id", None)
+    college_id =  request.json.get("college_id", None)
+    rbody = request.json.get("body", None)
+    rrecommend = request.json.get("recommend", None)
+    rdifficulty = request.json.get("difficulty", None)
+    remployer_reputation = request.json.get("employer_reputation", None)
+    racademics = request.json.get("academics", None)
+    rstudent_life = request.json.get("student_life", None)
+    stmt = db.insert(Review).values(body=rbody, recommend=rrecommend, difficulty=rdifficulty, employer_reputation=remployer_reputation,
+    academics=racademics, student_life=rstudent_life, user_id=user_id, college_id=college_id)
+    result = db.session.execute(stmt)
+    db.session.commit()

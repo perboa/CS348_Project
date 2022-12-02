@@ -64,6 +64,10 @@ code {
   margin-top: 10%;
 }
 
+.signup{
+	margin-top: 10%;
+}
+
 .errorMessage{
   color: red;
   display: none;

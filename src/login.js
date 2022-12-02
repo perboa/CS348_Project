@@ -10,20 +10,6 @@ const LoginForm = (props) =>{
     const saveChanges = async () =>{
 
         try {
-<<<<<<< HEAD
-=======
-            //if( form.values.email === 'mar@abc.com')  
-            //{ props.setLoggedIn(true);
-            //  history.push('/search')
-            //} else {
-            //  document.getElementById('errorMessage').style.display='block';
-            //}
-
-            //if (form.values.termsOfService == false){
-            //  document.getElementById('errorMessagetwo').style.display='block';
-            //  return;
-            //} 
->>>>>>> ebd7776cad10c1d9bfa84edbe9048315f413ee9e
             const url = 'http://127.0.0.1:5000/login'
             const data = {
                 email: form.values.email,
@@ -32,17 +18,12 @@ const LoginForm = (props) =>{
             console.log("about to make request")
             const value = await axios.post(url,data)
             console.log(value)
-<<<<<<< HEAD
             if(value.data[0] == "True"){ 
               props.setLoggedIn(true)
               console.log(value.data[0])
               console.log(value.data[1])
               props.setid(value.data[1])
               
-=======
-            if(value.data == "True"){ 
-              props.setLoggedIn(true)
->>>>>>> ebd7776cad10c1d9bfa84edbe9048315f413ee9e
               history.push('/search')}
             else if ((value.data == "False") || (form.values.termsOfService == false)){
               props.setLoggedIn(false)

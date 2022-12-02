@@ -7,15 +7,20 @@ id,email,password,joined_date,first_name,last_name,linkedIn,avatar_URL,
 user_id,college_id,body,recommend,difficulty,employer_reputation,academics,student_life,time_written
 1,1,This is my review.,1,awful,bad,neutral,great,11/18/2022 3:25
 ,,,,,,,,
-user_id,college_id,body,recommend,difficulty,employer_reputation,academics,student_life,time_written
-2,1,"Cupiditate architecto corporis sequi beatae quasi suscipit, possimus deleniti doloribus voluptatibus numquam iste quam autem itaque. Vel autem error laboriosam in laborum, repellat ipsam laudantium deserunt error, velit a beatae, maxime at magnam iusto unde possimus sint velit? Molestiae ducimus vero error optio, dolorem libero voluptas cupiditate eum aliquam dolores qui, vel est laboriosam cumque, mollitia vitae dolorem quos sint, totam sunt optio dolorum nobis cumque assumenda perspiciatis ipsum quas hic?",0,great,bad,great,awful,11/17/2022 21:03
-24,1,"Inventore totam eaque magnam alias voluptates ipsa laborum quis, dolor aliquam quasi quo neque adipisci quos sint soluta, officiis reiciendis iure. Facere distinctio fuga modi inventore eum repellat ad cupiditate, ea ex veritatis omnis atque officia id quasi quaerat vel illum quo, ipsa unde nemo veritatis optio illum non est vero, laborum deleniti quas odit dolorem commodi? Voluptatem at laboriosam consequatur numquam quis sapiente perspiciatis, laborum deserunt id odio animi beatae. Ipsam illo assumenda aspernatur voluptates quia quasi voluptatem ratione, error ipsam reprehenderit ipsum consequuntur nemo eius veritatis facere, recusandae non enim repellendus officiis expedita ipsum eos, iusto quae accusantium dolorum quaerat expedita magnam libero exercitationem consequuntur iste aliquam, ab incidunt veritatis soluta ea voluptatibus tempora.",1,great,great,great,awful,11/17/2022 21:03
-48,1,"Suscipit quisquam delectus exercitationem veritatis repudiandae molestiae, ea et cumque consectetur quod nemo delectus quae, sequi cum unde voluptatum est voluptatibus repellendus tempore possimus ex harum, atque voluptatem quibusdam nesciunt beatae quis delectus? Facilis possimus fugit, possimus natus nemo numquam velit quam aut sapiente itaque delectus, esse delectus totam molestiae modi vel magni, iste quisquam officiis distinctio voluptatem minima cupiditate temporibus quae esse eum? Accusamus nulla magnam possimus debitis fuga unde voluptatum accusantium facere recusandae qui, corporis vitae accusantium illo esse temporibus repellat impedit deleniti debitis, natus odit rem iusto perspiciatis quas corrupti, maiores est dolores beatae sequi ipsa labore provident quas fugiat cupiditate, iste officia dolor voluptatum odio nemo et ducimus consequatur.",0,good,great,good,neutral,11/17/2022 21:03
-71,1,"Laboriosam maxime unde asperiores provident distinctio corporis necessitatibus dolor, labore unde nostrum alias deserunt totam nam sint ad possimus, culpa aliquid fugiat labore voluptatem excepturi non, voluptatibus illo autem aspernatur, provident est ratione optio eligendi facilis accusamus voluptas ad quas doloribus? Vitae quo ab consequuntur laboriosam quam, doloribus qui modi quam voluptatum nam magni ad molestiae et rem, ipsa eius voluptatem qui voluptatum animi sapiente obcaecati repellat molestias alias nulla?",0,neutral,great,great,bad,11/17/2022 21:03
-101,1,"Eveniet omnis vitae praesentium ducimus nesciunt asperiores porro atque facilis adipisci quae, explicabo veniam error nemo, natus iure laboriosam dolorum culpa consequatur, laboriosam ea saepe nisi consequatur aperiam soluta beatae hic aliquam, quaerat sunt magni vitae. Sunt incidunt sit modi repudiandae repellat optio, est pariatur tempore accusantium consequatur vero aut modi?",0,neutral,great,bad,awful,11/17/2022 21:03
-105,1,"Numquam laboriosam cupiditate voluptate, illum in similique ex iusto ipsum veniam temporibus sed voluptas maxime tempore, ipsa nesciunt placeat voluptatum debitis sint blanditiis, voluptates unde eum sit eaque quaerat, numquam itaque dolores libero consequuntur tempore quod placeat aliquam reprehenderit. Voluptas veritatis commodi, vitae officiis nam eum dolore atque ducimus temporibus blanditiis fugiat non aliquam. Ducimus temporibus debitis, porro quos fuga nihil repellat dignissimos excepturi optio earum facere, beatae doloremque voluptas molestiae aperiam ipsam, qui voluptas delectus asperiores vel blanditiis ducimus veritatis optio ea.",0,good,bad,great,awful,11/17/2022 21:03
-107,1,"Eos cumque dolore saepe inventore explicabo necessitatibus, eligendi laborum alias nemo deleniti consequuntur perferendis at assumenda perspiciatis quisquam id, illo dolores et quod magnam amet voluptatem ipsa? Beatae blanditiis sunt delectus sequi et quidem a vitae quam placeat, provident itaque aliquam odio quaerat accusantium illum porro? Veritatis molestias iste maxime adipisci earum dolor architecto aliquid, cumque reprehenderit itaque obcaecati, aliquid repudiandae tenetur deserunt voluptate et.",1,great,great,awful,awful,11/17/2022 21:03
-108,1,"Voluptatem saepe architecto quae esse minima porro, placeat optio repellendus delectus sequi soluta voluptatum, vitae quae harum cumque enim veniam at cupiditate, assumenda qui numquam? Doloremque ipsum tempore exercitationem, assumenda voluptatibus rerum?",1,great,neutral,awful,awful,11/17/2022 21:03
+AVG(recommend)
+'0.3750'
+
+AVG(difficulty)
+'4.25'
+
+AVG(employer_reputation)
+'4'
+
+AVG(student_life)
+1.375
+
+AVG(academics)
+'3.5'
 ,,,,,,,,
 user_id,college_id,body,recommend,difficulty,employer_reputation,academics,student_life,time_written
 13,6,"A aperiam tenetur repellendus reiciendis facilis perferendis eligendi incidunt, ad ab nam, nam soluta voluptas vitae eveniet, sunt minima sapiente neque quis nulla a labore esse voluptatibus quia perspiciatis, aliquid eaque asperiores illum at nobis. Beatae adipisci excepturi aliquid a necessitatibus, commodi exercitationem illo vero beatae?",0,neutral,neutral,awful,bad,11/17/2022 21:03

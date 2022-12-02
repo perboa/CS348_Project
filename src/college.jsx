@@ -1,8 +1,16 @@
 import React from 'react';
 import "./index.css";
-import logo from './logos/University of Waterloo.png';
+import UWLogo from './uwlogo.jsx';
+import ColumbiaLogo from './columbialogo';
 import { Card, Button } from '@mantine/core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { icon } from '@fortawesome/fontawesome-svg-core/import.macro';
 import axios from 'axios';
+import { useParams } from "react-router";
+
+function withParams(Component) {
+  return props => <Component {...props} params={useParams()} />;
+}
 
 class College extends React.Component {
     constructor(props) {
@@ -18,20 +26,26 @@ class College extends React.Component {
           studentLife: null,
           academics: null,
           difficulty: null,
-          reputation: null
+          reputation: null,
+          reviews: []
         };
 
         this.getBaseInfo = this.getBaseInfo.bind(this);
+        this.getSummaryInfo = this.getSummaryInfo.bind(this);
+        this.getReviews = this.getReviews.bind(this);
       }
 
       componentDidMount() {
-        this.getBaseInfo();
+        let id = this.props.match.params.id;
+        this.getBaseInfo(id);
+        this.getSummaryInfo(id);
+        this.getReviews(id);
       };
 
-      getBaseInfo = () => {
+      getBaseInfo = (id) => {
         axios.get('http://127.0.0.1:5000/colleges/base-info', {
               params: {
-                ID: 11
+                ID: id
               }
               })
               .then((res) => {
@@ -41,7 +55,7 @@ class College extends React.Component {
                   city: data.city,
                   state: data.state,
                   country: data.country,
-                  logo: data.logo
+                  logo: data.logo_URL
                 });
               })
               .catch((err) => {
@@ -50,9 +64,62 @@ class College extends React.Component {
               })
       };
 
+      getSummaryInfo = (id) => {
+        axios.get('http://127.0.0.1:5000/colleges/summary', {
+              params: {
+                ID: id
+              }
+              })
+              .then((res) => {
+                let data = res.data;
+                this.setState({
+                  rating: data.rating,
+                  studentLife: data.student_life,
+                  academics: data.academics,
+                  difficulty: data.difficulty,
+                  reputation: data.reputation
+                });
+              })
+              .catch((err) => {
+                // handle error
+                console.log(err);
+              })
+      };
+
+      getReviews = (id) => {
+        axios.get('http://127.0.0.1:5000/colleges/reviews/all', {
+              params: {
+                ID: id
+              }
+              })
+              .then((res) => {
+                let data = res.data;
+                this.setState({
+                  rating: data.rating,
+                  studentLife: data.student_life,
+                  academics: data.academics,
+                  difficulty: data.difficulty,
+                  reputation: data.reputation
+                });
+              })
+              .catch((err) => {
+                // handle error
+                console.log(err);
+              })
+      };
+
+
       render() {
         const name = this.state.name;
         const location = this.state.city + ', ' + this.state.state + ', ' + this.state.country;
+        let rating = this.state.rating;
+        const studentLife = this.state.studentLife;
+        const academics = this.state.academics;
+        const reputation = this.state.reputation;
+        const difficulty = this.state.difficulty;
+        const logo = this.state.logo;
+
+        rating = rating * 100;
 
         return (
             <div id="page" className="w-full h-screen flex flex-col justify-items-center">
@@ -62,28 +129,32 @@ class College extends React.Component {
                         <h1 className='font-sans subpixel-antialiased font-semibold text-8xl text-slate-900 text-end'> {name} </h1>
                         <p className='font-sans subpixel-antialiased font-semibold text-3xl text-slate-700 text-end m-5'> {location} </p>
                       </div>
-                      <img src={logo} className='mr-10 ml-10 w-52 h-52 z-50' alt=""></img>
+                      {logo == "University of Waterloo.png" ?
+                        <UWLogo className="mr-10 ml-10 w-52 h-52 z-50"/>
+                       :
+                        <ColumbiaLogo className="mr-10 ml-10 w-52 h-52 z-50"/>
+                       }
                     </div>
                     <div id="summary-statistics" className="flex flex-row justify-center pt-20">
                       <Card className="w-48 m-5 flex flex-col justify-center align-center" shadow="sm" p="md" radius="md" withBorder>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Rating </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> {rating}% </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Student Life </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> {studentLife} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Academics </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> {academics} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Difficulty </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> {difficulty} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Employer Reputation </h2>
-                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> {reputation} </h3>
                       </Card>
                     </div>
                 </div>
@@ -103,4 +174,4 @@ class College extends React.Component {
       }
   }
 
-export default College;
+export default withParams(College);

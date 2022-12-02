@@ -45,7 +45,7 @@ const App = () => {
                 }>
             </Route>
             <Route 
-              exact path='/college' 
+              path='/college/:id' 
               element={
                 <>
                   <College/>
@@ -75,7 +75,7 @@ const App = () => {
                 }>
           </Route>
           <Route 
-                exact path='/college' 
+                path='/college/:id' 
                 element={
                   <>
                     <College/>

@@ -10,17 +10,6 @@ const LoginForm = (props) =>{
     const saveChanges = async () =>{
 
         try {
-            //if( form.values.email === 'mar@abc.com')  
-            //{ props.setLoggedIn(true);
-            //  history.push('/search')
-            //} else {
-            //  document.getElementById('errorMessage').style.display='block';
-            //}
-
-            //if (form.values.termsOfService == false){
-            //  document.getElementById('errorMessagetwo').style.display='block';
-            //  return;
-            //} 
             const url = 'http://127.0.0.1:5000/login'
             const data = {
                 email: form.values.email,
@@ -29,8 +18,12 @@ const LoginForm = (props) =>{
             console.log("about to make request")
             const value = await axios.post(url,data)
             console.log(value)
-            if(value.data == "True"){ 
+            if(value.data[0] == "True"){ 
               props.setLoggedIn(true)
+              console.log(value.data[0])
+              console.log(value.data[1])
+              props.setid(value.data[1])
+              
               history.push('/search')}
             else if ((value.data == "False") || (form.values.termsOfService == false)){
               props.setLoggedIn(false)
@@ -88,7 +81,7 @@ const LoginForm = (props) =>{
         <div className='errorMessage' id='errorMessagetwo'>You have to accept the terms and conditions to continue</div>
           <div>
             
-              <Button type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
+              <Button className="hover:bg-blue-800 bg-blue-600" type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
             
           </div>
         </Group>
@@ -97,4 +90,3 @@ const LoginForm = (props) =>{
     </div>
 )};
 export default LoginForm;
-

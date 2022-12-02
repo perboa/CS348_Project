@@ -1,7 +1,7 @@
 from flask import jsonify, Blueprint, Flask
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
-from models import User, College, Review, Attended, Program
+from models import User, College, Review, Attended, Program, Rating, DegreeType
 from api import db
 #from signup import SignupForm
 from sqlalchemy import func
@@ -35,16 +35,54 @@ def getCollegeBase():
 @views.route('/colleges/summary', methods=['GET'])
 def getCollegeSummary():
     args = request.args
-    stmt = db.select().where(College.id == id)
-    # need to finish this
-    # db.session.query(func.avg(Review.).label('average')).filter(Rating.url==url_string.netloc)
+    id = args['ID']
+    rating = Review.query.with_entities(func.avg(Review.recommend).label('average')).filter(Review.college_id==id).one()[0]
+    student_life = Review.query.with_entities(func.avg(Review.student_life).label('average')).filter(Review.college_id==id).one()[0]
+    academics = Review.query.with_entities(func.avg(Review.academics).label('average')).filter(Review.college_id==id).one()[0]
+    reputation = Review.query.with_entities(func.avg(Review.employer_reputation).label('average')).filter(Review.college_id==id).one()[0]
+    difficulty = Review.query.with_entities(func.avg(Review.difficulty).label('average')).filter(Review.college_id==id).one()[0]
 
     return jsonify({
-        'rating': result.name,
-        'student_life': result.city,
-        'difficulty': result.state_province,
-        'academics': result.country,
-        'reputation': result.logo_URL
+        'rating': rating,
+        'student_life': student_life,
+        'difficulty': difficulty,
+        'academics': academics,
+        'reputation': reputation
+    })
+
+@views.route('/colleges/reviews/all_ids', methods=['GET'])
+def getAllCollegeReviews():
+    args = request.args
+    id = args['ID']
+    stmt = db.select(Review.user_id).where(College.id == id)
+    results = db.session.execute(stmt).all()
+
+    reviews = []
+
+    for review in results:
+        reviews.append(review[0])
+
+    return jsonify({
+        'reviews': reviews
+    })
+
+@views.route('/review', methods=['GET'])
+def getReview():
+    args = request.args
+    u_id = args['user_id']
+    c_id = args['college_id']
+    print(u_id, c_id)
+    review = Review.query.filter(Review.user_id == u_id, Review.college_id == c_id).one()
+    user = User.query.filter(User.id == u_id).one()
+
+    return jsonify({
+        'body': review.body,
+        'recommend': review.recommend,
+        'difficulty': review.difficulty.value,
+        'student_life': review.student_life.value,
+        'academics': review.academics.value,
+        'employer_reputation': review.employer_reputation.value,
+        'username' : user.first_name
     })
 
 @views.route('/login', methods = ['GET', 'POST'])
@@ -55,28 +93,33 @@ def login():
     result = db.session.execute(stmt).scalar()
     print("here")
     print(result)
+    responselist =[]
     if result == None:
-        return "False"
+        responselist.append("False")
+        return responselist
     else: 
         actpassword = result.password
+        id = result.id
+        print(id)
         if actpassword == password:
-            return "True"
-        else: return "False"
-    #return jsonify ({
-    #    'email': result.email,
-    #    'password': result.password
-    #}
-#)
-'''
-@views.route('/api/signup', methods = ['GET', 'POST'])
+            responselist.append("True")
+            responselist.append(id)
+            return responselist
+        else: responselist.append("False")
+        return responselist
+
+@views.route('/signup', methods = ['GET', 'POST'])
 def signup(): 
-    form = SignupForm()
-    if form.validate_on_submit():
-        user = User(first_name=form.first_name.data, last_name=form.last_name.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        return redirect('/')
-    return render_template('signup.html', form=form)
+    uemail = request.json.get("email", None)
+    upassword = request.json.get("password", None)
+    ufirstname = request.json.get("firstName", None)
+    ulastname = request.json.get("lastName", None)
+    stmt = db.insert(User).values(first_name=ufirstname, last_name=ulastname, email=uemail,password=upassword)
+    result = db.session.execute(stmt)
+    print(result.inserted_primary_key)
+    db.session.commit()
+    if result == None:
+        return "False"
+    else: return "True"
 
 '''

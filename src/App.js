@@ -1,27 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import "./index.css";
 import {
     BrowserRouter as Router,
     Route,
     Routes,
-    Navigate
   } from "react-router-dom";
 import LoginForm from './login';
-import Form from './Form';
 import SiteHeader from './header';
-import SearchForm from './Searchbar';
 import Search from './search';
 import SignUp from './signup';
-import { AppShell, Navbar, Header, Aside, Footer, Text, Group, Button } from '@mantine/core';
-import SearchBar from './search';
 import College from './college';
-import { render } from '@testing-library/react';
 //import { Table } from '@mantine/core';
 
 document.body.style.backgroundColor = "#FFFFFF"
 
 const App = () => {
     const [loggedIn, setLoggedIn] = useState(false)
+    const [id, setid] = useState(0)
     return (
          loggedIn ? 
          <>
@@ -45,7 +40,7 @@ const App = () => {
                 }>
             </Route>
             <Route 
-              exact path='/college' 
+              path='/college/:id' 
               element={
                 <>
                   <College/>
@@ -75,7 +70,7 @@ const App = () => {
                 }>
           </Route>
           <Route 
-                exact path='/college' 
+                path='/college/:id'  
                 element={
                   <>
                     <College/>
@@ -83,7 +78,7 @@ const App = () => {
                 }>
           </Route>
             <Route exact path="/signUp" element={<SignUp />} />
-            <Route exact path="/login" element={<LoginForm setLoggedIn={setLoggedIn} />} />
+            <Route exact path="/login" element={<LoginForm setLoggedIn={setLoggedIn} setid={setid}/>} />
           </Routes>
         </Router>
 

@@ -3,7 +3,7 @@ from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from models import User, College, Review, Attended, Program, Rating, DegreeType
 from api import db
-from signup import SignupForm
+#from signup import SignupForm
 from sqlalchemy import func
 
 views = Blueprint("views", __name__, static_folder='../build', static_url_path='/')
@@ -23,11 +23,12 @@ def getCollegeBase():
     result = db.session.execute(stmt).one()[0]
 
     return jsonify({
+        'id': result.id,
         'name': result.name,
         'city': result.city,
         'state': result.state_province,
         'country': result.country,
-        'logo_URL': result.logo_URL
+        'logo_url': result.logo_URL
     })
 
 
@@ -121,3 +122,4 @@ def signup():
         return "False"
     else: return "True"
 
+'''

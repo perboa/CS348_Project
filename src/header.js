@@ -2,8 +2,6 @@ import React from 'react';
 import {  Header,  Text, Group, Button } from '@mantine/core';
 import "./index.css"
 import Logout from './Logout';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { solid, regular, brands, icon } from '@fortawesome/fontawesome-svg-core/import.macro'
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,8 +18,7 @@ const SiteHeader = ({loggedIn, setLoggedIn}) => (
               <Text class="text-slate-100 font-semibold text-3xl pl-5" size="xl" weight="boldest">UReview</Text>
               <div style={{"display":"flex", "justifyContent":"space-between"}}>
               <Link to="/search">
-                <Button class="text-slate-100 font-semibold mr-10 hover:shadow-md" variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
-                <FontAwesomeIcon class="hover:text-slate-300 h-8 text-center" icon={icon({name: 'home', style:'solid'})}/>
+              <Button class="text-slate-100 font-semibold mr-10 hover:shadow-md" variant="gradient" gradient={{ from: 'indigo', to: 'cyan' }}>
                 </Button>
               </Link>
               {!loggedIn && (<Link to="/signUp">  

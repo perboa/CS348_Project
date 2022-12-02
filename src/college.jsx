@@ -137,27 +137,22 @@ class College extends React.Component {
                     </div>
                     <div id="summary-statistics" className="flex flex-row justify-center pt-20">
                       <Card className="w-48 m-5 flex flex-col justify-center align-center" shadow="sm" p="md" radius="md" withBorder>
-                        <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'thumbs-up', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Rating </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {rating}% </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
-                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'face-smile', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Student Life </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {studentLife} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
-                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'book', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Academics </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {academics} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
-                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'gem', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Difficulty </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {difficulty} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
-                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'handshake', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Employer Reputation </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {reputation} </h3>
                       </Card>
@@ -169,7 +164,8 @@ class College extends React.Component {
                     </div>
                     <div id="list" className="w-[65rem] flex flex-col align-center">
                       <Card className="w-full flex flex-col" shadow="sm" p="lg" radius="md" withBorder>
-                        
+                        <h2 className='text-center text-gray-900 font-bold text-2xl'> Employer Reputation </h2>
+                        <h3 className='text-center text-gray-800 font-semibold text-2xl'> 97% </h3>
                       </Card>
                     </div>
                 </div>

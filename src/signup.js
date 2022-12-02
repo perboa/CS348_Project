@@ -2,9 +2,42 @@ import { TextInput, PasswordInput, Checkbox, Button, Group, Box } from '@mantine
 import { useForm } from '@mantine/form';
 import "./index.css";
 import axios from "axios";
+import history from "history/browser"
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  withRouter
+} from 'react-router-dom';
 
-const SignUp = () =>{
 
+const SignUp = (props) =>{
+  const saveChanges = async () =>{
+
+    try {  
+        const url = 'http://127.0.0.1:5000/signup'
+        const data = {
+            email: form.values.email,
+            password: form.values.password,
+            firstName: form.values.firstName,
+            lastName:form.values.lastName
+
+        };
+        console.log("about to make request")
+        const value = await axios.post(url,data)
+        console.log(value)
+        console.log(value.data)
+        if(value.data == "True"){ 
+          history.push('/search')
+        }
+        else if ((value.data == "False") || (form.values.termsOfService == false)){
+            document.getElementById('errorMessage').style.display='block';
+        }
+    } catch (error) {
+        console.log(error)
+    } 
+}
   const form = useForm({
     initialValues: {
       firstName: '',
@@ -28,11 +61,15 @@ const SignUp = () =>{
     <>
     <Box sx={{ maxWidth: 340 }} mx="auto">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
+
 		<TextInput
           withAsterisk
           label="First Name"
           placeholder="Your first name"
           {...form.getInputProps('firstName')}
+          onChange={(e)=>{
+            form.setFieldValue('firstName', e.target.value);
+        }}
         />
 		
         <TextInput
@@ -40,6 +77,9 @@ const SignUp = () =>{
           label="Last Name"
           placeholder="Your last name"
           {...form.getInputProps('lastName')}
+          onChange={(e)=>{
+            form.setFieldValue('lastName', e.target.value);
+        }}
         />
 		
 		<TextInput
@@ -47,6 +87,9 @@ const SignUp = () =>{
           label="Email"
           placeholder="your@email.com"
           {...form.getInputProps('email')}
+          onChange={(e)=>{
+            form.setFieldValue('email', e.target.value);
+        }}
         />
 		
 		<PasswordInput
@@ -54,6 +97,9 @@ const SignUp = () =>{
           label="Password"
           placeholder="Enter your password"
           {...form.getInputProps('password')}
+          onChange={(e)=>{
+            form.setFieldValue('password', e.target.value);
+        }}
         />
 		
 		<PasswordInput
@@ -62,6 +108,9 @@ const SignUp = () =>{
           label="Confirm Password"
           placeholder="Retype your password"
           {...form.getInputProps('confirmPassword')}
+          onChange={(e)=>{
+            form.setFieldValue('confirmPassword', e.target.value);
+        }}
         />
 
         <Checkbox
@@ -71,10 +120,15 @@ const SignUp = () =>{
         />
 
         <Group position="right" mt="md">
-          <Button  type="submit">Sign Up</Button>
+          <div>
+          <Link to="/search"> 
+              <Button className="hover:bg-blue-800 bg-blue-600" type="submit" onClick={()=>{ saveChanges(); }}>Submit</Button>
+          </Link>
+          </div>
         </Group>
       </form>
     </Box>
     </>
   )}
+
 export default SignUp;

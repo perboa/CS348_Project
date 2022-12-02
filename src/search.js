@@ -105,7 +105,7 @@ const Search = () => {
 
   }, []);
   const routeChange = (id) =>{ 
-    let path = `college/` + encodeURI(id); 
+    let path = `/college/` + encodeURI(id); 
     history(path);
     window.location.reload();
   }

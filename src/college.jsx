@@ -36,7 +36,7 @@ class College extends React.Component {
       }
 
       componentDidMount() {
-        let id = this.props.match.params.id;
+        let id = this.props.params.id;
         this.getBaseInfo(id);
         this.getSummaryInfo(id);
         this.getReviews(id);
@@ -113,13 +113,17 @@ class College extends React.Component {
         const name = this.state.name;
         const location = this.state.city + ', ' + this.state.state + ', ' + this.state.country;
         let rating = this.state.rating;
-        const studentLife = this.state.studentLife;
-        const academics = this.state.academics;
-        const reputation = this.state.reputation;
-        const difficulty = this.state.difficulty;
+        let studentLife = this.state.studentLife;
+        let academics = this.state.academics;
+        let reputation = this.state.reputation;
+        let difficulty = this.state.difficulty;
         const logo = this.state.logo;
 
-        rating = rating * 100;
+        studentLife = Number(studentLife).toFixed(2);
+        academics = Number(studentLife).toFixed(2);
+        reputation = Number(studentLife).toFixed(2);
+        difficulty = Number(studentLife).toFixed(2);
+        rating = (rating * 100).toFixed(2);
 
         return (
             <div id="page" className="w-full h-screen flex flex-col justify-items-center">
@@ -137,22 +141,27 @@ class College extends React.Component {
                     </div>
                     <div id="summary-statistics" className="flex flex-row justify-center pt-20">
                       <Card className="w-48 m-5 flex flex-col justify-center align-center" shadow="sm" p="md" radius="md" withBorder>
+                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'thumbs-up', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Rating </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {rating}% </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
+                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'face-smile', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Student Life </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {studentLife} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
+                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'book', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Academics </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {academics} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
+                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'gem', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Difficulty </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {difficulty} </h3>
                       </Card>
                       <Card className="w-48 m-5 flex flex-col justify-center" shadow="sm" p="lg" radius="md" withBorder>
+                      <FontAwesomeIcon className="text-blue-800 h-8 text-center" icon={icon({name: 'handshake', style:'solid'})}/>
                         <h2 className='text-center text-gray-900 font-bold text-2xl'> Employer Reputation </h2>
                         <h3 className='text-center text-gray-800 font-semibold text-2xl'> {reputation} </h3>
                       </Card>

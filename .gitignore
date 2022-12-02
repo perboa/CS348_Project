@@ -9,3 +9,5 @@ node_modules/
 !.yarn/versions
 api/__pycache__/*
 api/__pycache__/
+api/venv/
+api/venv/*

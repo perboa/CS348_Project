@@ -1,7 +1,11 @@
-import {React, useState} from 'react';
+import {React, useState, useEffect} from 'react';
 import {
+    Card,
+    Badge, 
+    Image,
     Paper, 
     Container, 
+    MantineProvider,
     Button, 
     Box, 
     Group, 
@@ -10,7 +14,8 @@ import {
     MantineColor, 
     SelectItemProps,
     Stack,
-    Autocomplete
+    Autocomplete,
+    Space
   } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import {
@@ -27,8 +32,8 @@ import Logout from './Logout';
 import SiteHeader from './header';
 import axios from "axios";
 import "./index.css"
-
 const Search = () => {
+
   const [value, setValue] = useState('');
   const form = useForm({
       initialValues: {
@@ -46,20 +51,15 @@ const Search = () => {
     setIsShown(true);
   };
 
-  const posts = [
-    { id: '2', name: 'University of Waterloo', city: "Waterloo", state: "ON", country: "CA"},
-    { id: '3', name: 'Harvard University', city: "Cambridge", state: "MA", country: "US"},
-    { id: '4', name: 'University of Toronto', city: "Toronto", state: "ON", country: "CA"},
-    { id: '5', name: 'Western University', city: "London", state: "ON", country: "CA"},
-    { id: '6', name: 'Massachusetts Institute of Technology', city: "Cambridge", state: "MA", country: "US"},
-    { id: '7', name: 'Stanford University', city: "Stanford", state: "CA", country: "US"},
-    { id: '8', name: 'Princeton University', city: "Princeton", state: "NJ", country: "US"},
-    { id: '9', name: 'Columbia University', city: "New York", state: "NY", country: "US"},
-    { id: '10', name: 'Yale University', city: "New Haven", state: "CT", country: "US"},
-    { id: '11', name: 'Queens University', city: "Kingston", state: "ON", country: "CA"},
-    { id: '12', name: 'University of British Columbia', city: "Vancouver", state: "BC", country: "CA"},
-  ];
-  
+  const[posts, setPosts] = useState([
+    { id: '1', name: 'University of British Columbia', city: "Vancouver", state: "BC", country: "CA"}
+  ]);
+
+    const handleFunctionAdd = (obj) => {
+        setPosts(posts => [...posts, obj]);
+    };
+
+
   const filterPosts = (posts, query) => {
       if (!query) {
           return [];
@@ -74,7 +74,42 @@ const Search = () => {
   const { search } = window.location;
   const query = new URLSearchParams(search).get('s');
   const data = posts.map((item) => ({ ...item, value: item.name }));
-  
+
+
+  useEffect(() => {
+        // call api or anything
+          const getApiData = async (a) => {
+            console.log("Loaded")
+            console.log(a)
+            const response = await fetch(
+              `http://localhost:5000/colleges/base-info?ID=${encodeURIComponent(a)}`, {method: 'GET', dataType: 'json'}
+            ).then((response) => response.json())
+             .then((responseJSON) => {console.log(responseJSON);  handleFunctionAdd(responseJSON)});
+            // update the state
+            //handleFunctionAdd()
+            //console.log(posts);
+          };
+          //getApiData('1').catch(console.error)
+          getApiData('2').catch(console.error)
+          getApiData('3').catch(console.error)
+          getApiData('4').catch(console.error)
+          getApiData('5').catch(console.error)
+          getApiData('6').catch(console.error)
+          getApiData('7').catch(console.error)
+          getApiData('8').catch(console.error)
+          getApiData('9').catch(console.error)
+          getApiData('10').catch(console.error)
+          getApiData('11').catch(console.error)
+
+
+
+  }, []);
+  const routeChange = (id) =>{ 
+    let path = `colleges?id=` + encodeURI(id); 
+    history(path);
+    window.location.reload();
+  }
+
   const renderCond = curData => (
     isShown ? 
         <div> 
@@ -82,18 +117,29 @@ const Search = () => {
             {curData.map(item => {
               return (
                 <Group>
-                  <Paper shadow="xs" p="md">
-                    <Group>
-                    <Stack>
-                    <li>{item.name}</li>
-                    </Stack>
-                    <Stack>
-                    <li>{item.city}</li>
+                  <Card shadow="lg" p="lg" radius="lg" withBorder>
+                    <Card.Section>
+                      <Image
+                        src="logos/Columbia University.png"
 
-                    </Stack>
+                        height={160}
+                      />
+                    </Card.Section>
+                    
+                  <Group position="apart" mt="lg" mb="md">
+                    <Text>{item.name} -- {item.city}, {item.state} </Text>
                     </Group>
-                  </Paper>
-                </Group>
+        
+                  <Button variant='outline' type="submit" onClick={()=>{ 
+                                        console.log("Tested");
+                                        
+                                        routeChange(item.id)
+                                       }}>
+                                       More info
+                  </Button>
+                  </Card>
+                  <Space h="lg" />
+                </Group>    
               )
           })}
           </ul>
@@ -102,6 +148,10 @@ const Search = () => {
       )
 
   return(
+      <MantineProvider
+      theme={{
+        spacing: { xs: 15, sm: 20, md: 25, lg: 30, xl: 40 },
+      }}>
         <div className='search'>
             <Box sx={{ maxWidth: 300 }} mx="auto">
                 <div className="inner1">
@@ -121,13 +171,14 @@ const Search = () => {
                       }}
                     />
 
-                    <Button type="submit" onClick={()=>{ 
+                    <Button variant='outline' type="submit" onClick={()=>{ 
                                         console.log("Search term: ")
                                         console.log(form.values.searchTerm)
                                         saveChanges(form.values.searchTerm);
                                         console.log(filterPosts(posts, form.values.searchTerm));
                                        }}>Submit</Button>
                   </form>
+                  <Space h="lg" />
                   <div>
                   <Box sx={{ maxWidth: 300 }} mx="auto">
                   {renderCond(filterPosts(posts, form.values.searchTerm))}
@@ -138,7 +189,7 @@ const Search = () => {
             
             </Box>  
         </div>
-
+        </MantineProvider>
   )
 };
 export default Search;
